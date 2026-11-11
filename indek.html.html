@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Pembelajaran Interaktif - Berpikir Komputasional</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .font-serif-title {
+            font-family: 'Playfair Display', serif;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #94a3b8;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #64748b;
+        }
+        /* Print Styles for Certificate Download */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #printable-certificate, #printable-certificate * {
+                visibility: visible;
+            }
+            #printable-certificate {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                margin: 0;
+                padding: 20px;
+                box-shadow: none !important;
+                border: 8px double #1e3a8a !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col">
+
+    <!-- Header Navigation -->
+    <header class="bg-gradient-to-r from-blue-700 via-indigo-700 to-purple-800 text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="bg-white/20 p-2.5 rounded-xl backdrop-blur-md">
+                    <i class="fa-solid fa-brain text-2xl text-yellow-300"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg sm:text-xl tracking-tight leading-tight">Berpikir Komputasional</h1>
+                    <p class="text-xs text-blue-200">Media Pembelajaran Interaktif KKA</p>
+                </div>
+            </div>
+            
+            <div class="hidden md:flex items-center space-x-2 text-xs font-semibold bg-white/10 px-3 py-1.5 rounded-full border border-white/20">
+                <i class="fa-solid fa-chalkboard-user text-yellow-300"></i>
+                <span>Pengampu: Tri Wiyanti, S.Kom</span>
+            </div>
+        </div>
+
+        <!-- Scrollable Navigation Bar -->
+        <nav class="bg-indigo-900/60 backdrop-blur-md border-t border-white/10 overflow-x-auto no-scrollbar">
+            <div class="max-w-7xl mx-auto px-2 flex space-x-1 sm:space-x-2 py-2 min-w-max">
+                <button onclick="switchTab('tujuan')" id="nav-tujuan" class="nav-btn active flex items-center space-x-2 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition duration-200 bg-white/20 text-white">
+                    <i class="fa-solid fa-bullseye"></i><span>1. Tujuan</span>
+                </button>
+                <button onclick="switchTab('cp')" id="nav-cp" class="nav-btn flex items-center space-x-2 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition duration-200 text-blue-100 hover:bg-white/10">
+                    <i class="fa-solid fa-award"></i><span>2. CP</span>
+                </button>
+                <button onclick="switchTab('atp')" id="nav-atp" class="nav-btn flex items-center space-x-2 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition duration-200 text-blue-100 hover:bg-white/10">
+                    <i class="fa-solid fa-route"></i><span>3. ATP</span>
+                </button>
+                <button onclick="switchTab('pemantik')" id="nav-pemantik" class="nav-btn flex items-center space-x-2 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition duration-200 text-blue-100 hover:bg-white/10">
+                    <i class="fa-solid fa-lightbulb"></i><span>4. Soal Pemantik</span>
+                </button>
+                <button onclick="switchTab('materi')" id="nav-materi" class="nav-btn flex items-center space-x-2 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition duration-200 text-blue-100 hover:bg-white/10">
+                    <i class="fa-solid fa-book-open"></i><span>5. Materi 4 Pilar</span>
+                </button>
+                <button onclick="switchTab('kasus')" id="nav-kasus" class="nav-btn flex items-center space-x-2 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition duration-200 text-blue-100 hover:bg-white/10">
+                    <i class="fa-solid fa-soap"></i><span>6. Studi Kasus</span>
+                </button>
+                <button onclick="switchTab('asesmen')" id="nav-asesmen" class="nav-btn flex items-center space-x-2 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition duration-200 text-blue-100 hover:bg-white/10">
+                    <i class="fa-solid fa-pen-to-square"></i><span>7. Asesmen</span>
+                </button>
+                <button onclick="switchTab('hasil')" id="nav-hasil" class="nav-btn flex items-center space-x-2 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition duration-200 text-blue-100 hover:bg-white/10">
+                    <i class="fa-solid fa-certificate"></i><span>8. Sertifikat</span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+        <!-- SECTION 1: TUJUAN PEMBELAJARAN -->
+        <section id="section-tujuan" class="tab-content block space-y-6 animate-fade-in">
+            <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200/80">
+                <div class="flex items-center space-x-3 mb-6">
+                    <div class="p-3 bg-blue-100 text-blue-700 rounded-xl">
+                        <i class="fa-solid fa-bullseye text-2xl"></i>
+                    </div>
+                    <div>
+                        <span class="text-xs font-bold tracking-wider text-blue-600 uppercase">Bagian 1</span>
+                        <h2 class="text-2xl font-bold text-slate-800">Tujuan Pembelajaran</h2>
+                    </div>
+                </div>
+                <p class="text-slate-600 leading-relaxed mb-6">
+                    Setelah mempelajari modul interaktif ini, peserta didik diharapkan mampu mencapai indikator-indikator keberhasilan berikut:
+                </p>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-2xl border border-blue-100 flex items-start space-x-4 shadow-sm hover:shadow-md transition">
+                        <div class="bg-blue-600 text-white p-3 rounded-xl font-bold text-lg">01</div>
+                        <div>
+                            <h3 class="font-bold text-slate-800 text-lg mb-2">Memahami Konsep Dasar</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed">
+                                Peserta didik mampu memahami konsep **Berpikir Komputasional (Computational Thinking)** sebagai metode pemecahan masalah secara terstruktur dan efisien.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="bg-gradient-to-br from-indigo-50 to-purple-50 p-6 rounded-2xl border border-indigo-100 flex items-start space-x-4 shadow-sm hover:shadow-md transition">
+                        <div class="bg-indigo-600 text-white p-3 rounded-xl font-bold text-lg">02</div>
+                        <div>
+                            <h3 class="font-bold text-slate-800 text-lg mb-2">Menerapkan 4 Pilar CT</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed">
+                                Peserta didik mampu menerapkan 4 pilar/komponen utama CT dalam menyelesaikan permasalahan kehidupan sehari-hari secara sistematis dan optimal.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-8 text-right">
+                    <button onclick="switchTab('cp')" class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-xl shadow-md transition flex items-center space-x-2 ml-auto">
+                        <span>Lanjut ke Capaian Pembelajaran</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: CAPAIAN PEMBELAJARAN (CP) -->
+        <section id="section-cp" class="tab-content hidden space-y-6">
+            <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200/80">
+                <div class="flex items-center space-x-3 mb-6">
+                    <div class="p-3 bg-indigo-100 text-indigo-700 rounded-xl">
+                        <i class="fa-solid fa-award text-2xl"></i>
+                    </div>
+                    <div>
+                        <span class="text-xs font-bold tracking-wider text-indigo-600 uppercase">Bagian 2</span>
+                        <h2 class="text-2xl font-bold text-slate-800">Capaian Pembelajaran (CP)</h2>
+                    </div>
+                </div>
+                <div class="bg-gradient-to-r from-slate-900 to-indigo-950 text-white p-6 sm:p-8 rounded-2xl shadow-md relative overflow-hidden">
+                    <div class="absolute -right-10 -bottom-10 opacity-10">
+                        <i class="fa-solid fa-brain text-9xl text-white"></i>
+                    </div>
+                    <div class="relative z-10 space-y-4">
+                        <span class="bg-indigo-500/30 text-indigo-200 text-xs font-semibold px-3 py-1 rounded-full border border-indigo-400/30">Elemen: Berpikir Komputasional (BK)</span>
+                        <h3 class="text-xl sm:text-2xl font-bold text-indigo-100">Deskripsi Capaian Pembelajaran:</h3>
+                        <p class="text-slate-200 leading-relaxed text-base sm:text-lg italic font-serif">
+                            "Pada akhir fase ini, peserta didik mampu memahami dan menerapkan fondasi Berpikir Komputasional untuk memecahkan masalah komputasi serta merancang algoritma secara efektif, efisien, dan optimal dalam berbagai ranah kehidupan."
+                        </p>
+                    </div>
+                </div>
+                <div class="mt-8 flex justify-between">
+                    <button onclick="switchTab('tujuan')" class="px-5 py-2.5 bg-slate-200 hover:bg-slate-300 text-slate-700 font-medium rounded-xl transition flex items-center space-x-2">
+                        <i class="fa-solid fa-arrow-left"></i><span>Kembali</span>
+                    </button>
+                    <button onclick="switchTab('atp')" class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-xl shadow-md transition flex items-center space-x-2">
+                        <span>Lanjut ke ATP</span><i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: ALUR TUJUAN PEMBELAJARAN (ATP) -->
+        <section id="section-atp" class="tab-content hidden space-y-6">
+            <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200/80">
+                <div class="flex items-center space-x-3 mb-6">
+                    <div class="p-3 bg-purple-100 text-purple-700 rounded-xl">
+                        <i class="fa-solid fa-route text-2xl"></i>
+                    </div>
+                    <div>
+                        <span class="text-xs font-bold tracking-wider text-purple-600 uppercase">Bagian 3</span>
+                        <h2 class="text-2xl font-bold text-slate-800">Alur Tujuan Pembelajaran (ATP)</h2>
+                    </div>
+                </div>
+                <p class="text-slate-600 mb-6">Tahapan tahapan alur pembelajaran yang akan dilalui peserta didik:</p>
+                <div class="space-y-4">
+                    <div class="flex items-start space-x-4 p-4 rounded-xl bg-slate-50 border border-slate-200 hover:border-purple-300 transition">
+                        <div class="w-10 h-10 rounded-full bg-purple-600 text-white flex items-center justify-center font-bold flex-shrink-0">1</div>
+                        <div>
+                            <h4 class="font-bold text-slate-800">Mengidentifikasi Konsep Dasar</h4>
+                            <p class="text-sm text-slate-600">Mengidentifikasi dan memahami definisi serta urgensi konsep Berpikir Komputasional.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-4 p-4 rounded-xl bg-slate-50 border border-slate-200 hover:border-purple-300 transition">
+                        <div class="w-10 h-10 rounded-full bg-purple-600 text-white flex items-center justify-center font-bold flex-shrink-0">2</div>
+                        <div>
+                            <h4 class="font-bold text-slate-800">Menganalisis Masalah dengan 4 Fondasi</h4>
+                            <p class="text-sm text-slate-600">Menganalisis suatu permasalahan kompleks menggunakan Dekomposisi, Pengenalan Pola, Abstraksi, dan Algoritma.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-4 p-4 rounded-xl bg-slate-50 border border-slate-200 hover:border-purple-300 transition">
+                        <div class="w-10 h-10 rounded-full bg-purple-600 text-white flex items-center justify-center font-bold flex-shrink-0">3</div>
+                        <div>
+                            <h4 class="font-bold text-slate-800">Mengaplikasikan pada Studi Kasus Kontekstual</h4>
+                            <p class="text-sm text-slate-600">Menerapkan 4 pilar CT pada aktivitas sehari-hari (contoh: simulasi proses mencuci baju hingga selesai).</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-4 p-4 rounded-xl bg-slate-50 border border-slate-200 hover:border-purple-300 transition">
+                        <div class="w-10 h-10 rounded-full bg-purple-600 text-white flex items-center justify-center font-bold flex-shrink-0">4</div>
+                        <div>
+                            <h4 class="font-bold text-slate-800">Mengukur Pemahaman & Penerbitan Sertifikat</h4>
+                            <p class="text-sm text-slate-600">Mengukur capaian pemahaman melalui asesmen interaktif dan mengunduh sertifikat kelulusan.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-8 flex justify-between">
+                    <button onclick="switchTab('cp')" class="px-5 py-2.5 bg-slate-200 hover:bg-slate-300 text-slate-700 font-medium rounded-xl transition flex items-center space-x-2">
+                        <i class="fa-solid fa-arrow-left"></i><span>Kembali</span>
+                    </button>
+                    <button onclick="switchTab('pemantik')" class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-xl shadow-md transition flex items-center space-x-2">
+                        <span>Lanjut Soal Pemantik</span><i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: SOAL PEMANTIK -->
+        <section id="section-pemantik" class="tab-content hidden space-y-6">
+            <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200/80">
+                <div class="flex items-center space-x-3 mb-6">
+                    <div class="p-3 bg-amber-100 text-amber-700 rounded-xl">
+                        <i class="fa-solid fa-lightbulb text-2xl"></i>
+                    </div>
+                    <div>
+                        <span class="text-xs font-bold tracking-wider text-amber-600 uppercase">Bagian 4</span>
+                        <h2 class="text-2xl font-bold text-slate-800">Soal Pemantik (Awal Pembelajaran)</h2>
+                    </div>
+                </div>
+                <p class="text-slate-600 mb-6">Uji pemikiran awalmu sebelum memasuki materi utama. Pilih jawaban yang menurutmu paling tepat!</p>
+
+                <!-- Pemantik Question 1 -->
+                <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 mb-6">
+                    <h3 class="font-bold text-slate-800 mb-3">1. Ketika kamu dihadapkan pada masalah besar yang membingungkan, apa langkah pertama yang paling efektif?</h3>
+                    <div class="space-y-2" id="pemantik-q1">
+                        <button onclick="checkPemantik(1, 'A', false)" class="opt-btn w-full text-left p-3 rounded-xl border border-slate-300 bg-white hover:bg-slate-100 transition text-sm">A. Membiarkannya sampai ada orang lain yang menyelesaikan.</button>
+                        <button onclick="checkPemantik(1, 'B', true)" class="opt-btn w-full text-left p-3 rounded-xl border border-slate-300 bg-white hover:bg-slate-100 transition text-sm">B. Memecah masalah besar tersebut menjadi bagian-bagian kecil yang lebih mudah dikelola.</button>
+                        <button onclick="checkPemantik(1, 'C', false)" class="opt-btn w-full text-left p-3 rounded-xl border border-slate-300 bg-white hover:bg-slate-100 transition text-sm">C. Langsung menebak solusi tanpa memahami penyebabnya.</button>
+                    </div>
+                    <div id="feedback-p1" class="hidden mt-4 p-4 rounded-xl text-sm leading-relaxed"></div>
+                </div>
+
+                <!-- Pemantik Question 2 -->
+                <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200">
+                    <h3 class="font-bold text-slate-800 mb-3">2. Berpikir Komputasional adalah...</h3>
+                    <div class="space-y-2" id="pemantik-q2">
+                        <button onclick="checkPemantik(2, 'A', false)" class="opt-btn w-full text-left p-3 rounded-xl border border-slate-300 bg-white hover:bg-slate-100 transition text-sm">A. Cara berpikir seperti komputer yang tidak punya perasaan.</button>
+                        <button onclick="checkPemantik(2, 'B', false)" class="opt-btn w-full text-left p-3 rounded-xl border border-slate-300 bg-white hover:bg-slate-100 transition text-sm">B. Kemampuan mengetik cepat dan menguasai aplikasi komputer.</button>
+                        <button onclick="checkPemantik(2, 'C', true)" class="opt-btn w-full text-left p-3 rounded-xl border border-slate-300 bg-white hover:bg-slate-100 transition text-sm">C. Proses berpikir merumuskan masalah dan solusinya agar dapat diselesaikan secara efisien.</button>
+                    </div>
+                    <div id="feedback-p2" class="hidden mt-4 p-4 rounded-xl text-sm leading-relaxed"></div>
+                </div>
+
+                <div class="mt-8 flex justify-between">
+                    <button onclick="switchTab('atp')" class="px-5 py-2.5 bg-slate-200 hover:bg-slate-300 text-slate-700 font-medium rounded-xl transition flex items-center space-x-2">
+                        <i class="fa-solid fa-arrow-left"></i><span>Kembali</span>
+                    </button>
+                    <button onclick="switchTab('materi')" class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-xl shadow-md transition flex items-center space-x-2">
+                        <span>Lanjut ke Materi Utama</span><i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 5: MATERI BERPIKIR KOMPUTASIONAL (4 FONDASI) -->
+        <section id="section-materi" class="tab-content hidden space-y-6">
+            <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200/80">
+                <div class="flex items-center space-x-3 mb-4">
+                    <div class="p-3 bg-blue-100 text-blue-700 rounded-xl">
+                        <i class="fa-solid fa-book-open text-2xl"></i>
+                    </div>
+                    <div>
+                        <span class="text-xs font-bold tracking-wider text-blue-600 uppercase">Bagian 5</span>
+                        <h2 class="text-2xl font-bold text-slate-800">Materi Berpikir Komputasional</h2>
+                    </div>
+                </div>
+                
+                <p class="text-slate-600 leading-relaxed mb-6">
+                    **Berpikir Komputasional (Computational Thinking)** adalah metode memecahkan masalah dengan menerapkan teknik yang digunakan oleh ilmuwan komputer. Berpikir komputasional memiliki **4 Pendekatan Utama (Fondasi)** yang saling berkaitan:
+                </p>
+
+                <!-- Grid 4 Pilar -->
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Pilar 1 -->
+                    <div class="border border-blue-200 rounded-2xl p-5 bg-gradient-to-br from-blue-50/50 to-white hover:shadow-lg transition">
+                        <div class="flex items-center space-x-3 mb-3">
+                            <span class="p-3 bg-blue-600 text-white rounded-xl font-bold"><i class="fa-solid fa-puzzle-piece"></i></span>
+                            <h3 class="text-xl font-bold text-slate-800">1. Dekomposisi</h3>
+                        </div>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-3">
+                            Memecah masalah yang kompleks menjadi bagian-bagian yang lebih kecil, sederhana, dan lebih mudah dikelola.
+                        </p>
+                        <div class="bg-blue-100/70 p-3 rounded-xl text-xs text-blue-900">
+                            <strong>Contoh:</strong> Saat hendak merawat sepeda motor, kita membaginya menjadi pemeriksaan rem, oli, rantai, dan ban secara terpisah.
+                        </div>
+                    </div>
+
+                    <!-- Pilar 2 -->
+                    <div class="border border-emerald-200 rounded-2xl p-5 bg-gradient-to-br from-emerald-50/50 to-white hover:shadow-lg transition">
+                        <div class="flex items-center space-x-3 mb-3">
+                            <span class="p-3 bg-emerald-600 text-white rounded-xl font-bold"><i class="fa-solid fa-magnifying-glass-chart"></i></span>
+                            <h3 class="text-xl font-bold text-slate-800">2. Pengenalan Pola</h3>
+                        </div>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-3">
+                            Mengenali kesamaan, pola, atau tren dari masalah-masalah yang pernah dihadapi sebelumnya untuk mempermudah prediksi solusi.
+                        </p>
+                        <div class="bg-emerald-100/70 p-3 rounded-xl text-xs text-emerald-900">
+                            <strong>Contoh:</strong> Mengetahui bahwa setiap musim hujan jalanan licin, sehingga kita harus mengurangi kecepatan berkendara.
+                        </div>
+                    </div>
+
+                    <!-- Pilar 3 -->
+                    <div class="border border-amber-200 rounded-2xl p-5 bg-gradient-to-br from-amber-50/50 to-white hover:shadow-lg transition">
+                        <div class="flex items-center space-x-3 mb-3">
+                            <span class="p-3 bg-amber-600 text-white rounded-xl font-bold"><i class="fa-solid fa-filter"></i></span>
+                            <h3 class="text-xl font-bold text-slate-800">3. Abstraksi</h3>
+                        </div>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-3">
+                            Fokus hanya pada informasi penting dan mengabaikan detail-detail kecil yang tidak relevan dengan permasalahan.
+                        </p>
+                        <div class="bg-amber-100/70 p-3 rounded-xl text-xs text-amber-900">
+                            <strong>Contoh:</strong> Saat melihat peta jalur busway, kita hanya fokus pada nama halte dan rute, bukan bentuk fisik jalan atau pohon di sekitarnya.
+                        </div>
+                    </div>
+
+                    <!-- Pilar 4 -->
+                    <div class="border border-purple-200 rounded-2xl p-5 bg-gradient-to-br from-purple-50/50 to-white hover:shadow-lg transition">
+                        <div class="flex items-center space-x-3 mb-3">
+                            <span class="p-3 bg-purple-600 text-white rounded-xl font-bold"><i class="fa-solid fa-list-check"></i></span>
+                            <h3 class="text-xl font-bold text-slate-800">4. Algoritma</h3>
+                        </div>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-3">
+                            Mengembangkan petunjuk langkah demi langkah yang terurut untuk menyelesaikan masalah secara konsisten.
+                        </p>
+                        <div class="bg-purple-100/70 p-3 rounded-xl text-xs text-purple-900">
+                            <strong>Contoh:</strong> Resep memasak mi instan dari memasak air, memasukkan mi, meracik bumbu, hingga menghidangkan.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 flex justify-between">
+                    <button onclick="switchTab('pemantik')" class="px-5 py-2.5 bg-slate-200 hover:bg-slate-300 text-slate-700 font-medium rounded-xl transition flex items-center space-x-2">
+                        <i class="fa-solid fa-arrow-left"></i><span>Kembali</span>
+                    </button>
+                    <button onclick="switchTab('kasus')" class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-xl shadow-md transition flex items-center space-x-2">
+                        <span>Lanjut Studi Kasus</span><i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 6: CONTOH STUDI KASUS (MENCUCI BAJU HINGGA SELESAI) -->
+        <section id="section-kasus" class="tab-content hidden space-y-6">
+            <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200/80">
+                <div class="flex items-center space-x-3 mb-4">
+                    <div class="p-3 bg-teal-100 text-teal-700 rounded-xl">
+                        <i class="fa-solid fa-soap text-2xl"></i>
+                    </div>
+                    <div>
+                        <span class="text-xs font-bold tracking-wider text-teal-600 uppercase">Bagian 6</span>
+                        <h2 class="text-2xl font-bold text-slate-800">Studi Kasus: Mencuci Baju Hingga Selesai</h2>
+                    </div>
+                </div>
+
+                <p class="text-slate-600 leading-relaxed mb-6">
+                    Mari kita bedah aktivitas sehari-hari yaitu **"Mencuci Baju Hingga Selesai & Rapi"** menggunakan 4 Fondasi Berpikir Komputasional!
+                </p>
+
+                <!-- Interactive Tabbed Case Study -->
+                <div class="bg-slate-900 text-white rounded-2xl p-6 shadow-xl">
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-6">
+                        <button onclick="showKasusTab('d')" id="ktab-d" class="kasus-tab-btn active bg-teal-600 text-white py-2.5 px-3 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center space-x-2">
+                            <i class="fa-solid fa-puzzle-piece"></i><span>Dekomposisi</span>
+                        </button>
+                        <button onclick="showKasusTab('p')" id="ktab-p" class="kasus-tab-btn bg-slate-800 text-slate-300 hover:bg-slate-700 py-2.5 px-3 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center space-x-2">
+                            <i class="fa-solid fa-magnifying-glass"></i><span>Pola</span>
+                        </button>
+                        <button onclick="showKasusTab('a')" id="ktab-a" class="kasus-tab-btn bg-slate-800 text-slate-300 hover:bg-slate-700 py-2.5 px-3 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center space-x-2">
+                            <i class="fa-solid fa-filter"></i><span>Abstraksi</span>
+                        </button>
+                        <button onclick="showKasusTab('al')" id="ktab-al" class="kasus-tab-btn bg-slate-800 text-slate-300 hover:bg-slate-700 py-2.5 px-3 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center space-x-2">
+                            <i class="fa-solid fa-list-ol"></i><span>Algoritma</span>
+                        </button>
+                    </div>
+
+                    <!-- Detail Dekomposisi -->
+                    <div id="kasus-d" class="kasus-content block space-y-4">
+                        <div class="flex items-center space-x-3 text-teal-400 font-bold text-lg border-b border-slate-700 pb-2">
+                            <i class="fa-solid fa-puzzle-piece"></i><span>1. Dekomposisi Mencuci Baju</span>
+                        </div>
+                        <p class="text-slate-300 text-sm leading-relaxed">
+                            Memecah proses besar "Mencuci Pakaian" menjadi beberapa sub-tugas kecil yang mudah dikerjakan:
+                        </p>
+                        <ul class="grid sm:grid-cols-2 gap-3 text-sm">
+                            <li class="bg-slate-800 p-3 rounded-xl flex items-center space-x-2 border border-slate-700">
+                                <i class="fa-solid fa-check-circle text-teal-400"></i>
+                                <span>Memilah baju (Putih vs Berwarna)</span>
+                            </li>
+                            <li class="bg-slate-800 p-3 rounded-xl flex items-center space-x-2 border border-slate-700">
+                                <i class="fa-solid fa-check-circle text-teal-400"></i>
+                                <span>Menyiapkan alat (Air, Detergen, Ember/Mesin Cuci)</span>
+                            </li>
+                            <li class="bg-slate-800 p-3 rounded-xl flex items-center space-x-2 border border-slate-700">
+                                <i class="fa-solid fa-check-circle text-teal-400"></i>
+                                <span>Proses Perendaman & Pengucekan/Pemutaran</span>
+                            </li>
+                            <li class="bg-slate-800 p-3 rounded-xl flex items-center space-x-2 border border-slate-700">
+                                <i class="fa-solid fa-check-circle text-teal-400"></i>
+                                <span>Pembilasan, Pemerasan & Penjemuran</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Detail Pengenalan Pola -->
+                    <div id="kasus-p" class="kasus-content hidden space-y-4">
+                        <div class="flex items-center space-x-3 text-emerald-400 font-bold text-lg border-b border-slate-700 pb-2">
+                            <i class="fa-solid fa-magnifying-glass-chart"></i><span>2. Pengenalan Pola Mencuci Baju</span>
+                        </div>
+                        <p class="text-slate-300 text-sm leading-relaxed">
+                            Mengidentifikasi kesamaan karakteristik bahan dan tingkat kekotoran baju berdasarkan pengalaman:
+                        </p>
+                        <div class="space-y-2 text-sm">
+                            <div class="bg-slate-800 p-3 rounded-xl border border-slate-700">
+                                <strong class="text-emerald-400">Pola Kekotoran:</strong> Baju yang terkena lumpur/noda membandel membutuhkan perendaman lebih lama dan sikat ekstra.
+                            </div>
+                            <div class="bg-slate-800 p-3 rounded-xl border border-slate-700">
+                                <strong class="text-emerald-400">Pola Bahan Pakaian:</strong> Pakaian berbahan halus (sutra/wol) perlu disikat perlahan/mode cuci lembut agar tidak rusak.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Detail Abstraksi -->
+                    <div id="kasus-a" class="kasus-content hidden space-y-4">
+                        <div class="flex items-center space-x-3 text-amber-400 font-bold text-lg border-b border-slate-700 pb-2">
+                            <i class="fa-solid fa-filter"></i><span>3. Abstraksi Mencuci Baju</span>
+                        </div>
+                        <p class="text-slate-300 text-sm leading-relaxed">
+                            Menyeleksi hal-hal penting dan mengabaikan detail yang tidak mempengaruhi kebersihan baju:
+                        </p>
+                        <div class="grid sm:grid-cols-2 gap-3 text-sm">
+                            <div class="bg-emerald-950/40 border border-emerald-500/30 p-3 rounded-xl">
+                                <span class="text-emerald-400 font-bold block mb-1">✓ Informasi Penting (Fokus):</span>
+                                <span class="text-slate-300 text-xs">Tingkat kebersihan, jumlah air, takaran detergen, kelayakan jemuran.</span>
+                            </div>
+                            <div class="bg-rose-950/40 border border-rose-500/30 p-3 rounded-xl">
+                                <span class="text-rose-400 font-bold block mb-1">✗ Diabaikan (Tidak Relevan):</span>
+                                <span class="text-slate-300 text-xs">Warna ember cuci, merk gantungan baju, atau musik yang didengar saat mencuci.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Detail Algoritma -->
+                    <div id="kasus-al" class="kasus-content hidden space-y-4">
+                        <div class="flex items-center space-x-3 text-purple-400 font-bold text-lg border-b border-slate-700 pb-2">
+                            <i class="fa-solid fa-list-ol"></i><span>4. Algoritma Urutan Langkah</span>
+                        </div>
+                        <p class="text-slate-300 text-sm leading-relaxed">
+                            Langkah demi langkah sistematis dari awal hingga baju siap dipakai:
+                        </p>
+                        <ol class="space-y-2 text-xs sm:text-sm">
+                            <li class="bg-slate-800 p-2.5 rounded-lg flex items-center space-x-3">
+                                <span class="w-6 h-6 rounded-full bg-purple-600 text-white font-bold flex items-center justify-center text-xs">1</span>
+                                <span>Pisahkan baju putih dan baju berwarna.</span>
+                            </li>
+                            <li class="bg-slate-800 p-2.5 rounded-lg flex items-center space-x-3">
+                                <span class="w-6 h-6 rounded-full bg-purple-600 text-white font-bold flex items-center justify-center text-xs">2</span>
+                                <span>Isi ember dengan air dan larutkan detergen secukupnya.</span>
+                            </li>
+                            <li class="bg-slate-800 p-2.5 rounded-lg flex items-center space-x-3">
+                                <span class="w-6 h-6 rounded-full bg-purple-600 text-white font-bold flex items-center justify-center text-xs">3</span>
+                                <span>Rendam pakaian selama 15-30 menit.</span>
+                            </li>
+                            <li class="bg-slate-800 p-2.5 rounded-lg flex items-center space-x-3">
+                                <span class="w-6 h-6 rounded-full bg-purple-600 text-white font-bold flex items-center justify-center text-xs">4</span>
+                                <span>Kucek atau putar pakaian hingga noda hilang.</span>
+                            </li>
+                            <li class="bg-slate-800 p-2.5 rounded-lg flex items-center space-x-3">
+                                <span class="w-6 h-6 rounded-full bg-purple-600 text-white font-bold flex items-center justify-center text-xs">5</span>
+                                <span>Bilas dengan air bersih 2-3 kali hingga bebas busa.</span>
+                            </li>
+                            <li class="bg-slate-800 p-2.5 rounded-lg flex items-center space-x-3">
+                                <span class="w-6 h-6 rounded-full bg-purple-600 text-white font-bold flex items-center justify-center text-xs">6</span>
+                                <span>Peras pakaian dan gantungkan pada tali jemuran di bawah sinar matahari.</span>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="mt-8 flex justify-between">
+                    <button onclick="switchTab('materi')" class="px-5 py-2.5 bg-slate-200 hover:bg-slate-300 text-slate-700 font-medium rounded-xl transition flex items-center space-x-2">
+                        <i class="fa-solid fa-arrow-left"></i><span>Kembali</span>
+                    </button>
+                    <button onclick="switchTab('asesmen')" class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-xl shadow-md transition flex items-center space-x-2">
+                        <span>Lanjut ke Asesmen Akhir</span><i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 7: ASESMEN AKHIR PEMBELAJARAN -->
+        <section id="section-asesmen" class="tab-content hidden space-y-6">
+            <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200/80">
+                <div class="flex items-center space-x-3 mb-6">
+                    <div class="p-3 bg-rose-100 text-rose-700 rounded-xl">
+                        <i class="fa-solid fa-pen-to-square text-2xl"></i>
+                    </div>
+                    <div>
+                        <span class="text-xs font-bold tracking-wider text-rose-600 uppercase">Bagian 7</span>
+                        <h2 class="text-2xl font-bold text-slate-800">Asesmen Akhir Pembelajaran</h2>
+                    </div>
+                </div>
+
+                <!-- Form Identitas Siswa -->
+                <div class="bg-indigo-50 border border-indigo-100 p-5 rounded-2xl mb-8">
+                    <h3 class="font-bold text-indigo-900 mb-3 flex items-center space-x-2">
+                        <i class="fa-solid fa-id-card text-indigo-600"></i>
+                        <span>Isi Data Diri Sebelum Memulai Asesmen</span>
+                    </h3>
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Nama Lengkap Siswa *</label>
+                            <input type="text" id="input-nama" placeholder="Masukkan nama lengkap Anda" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Kelas / Rombel *</label>
+                            <input type="text" id="input-kelas" placeholder="Contoh: X KKA 1" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white text-sm">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Daftar Soal Asesmen -->
+                <form id="quiz-form" class="space-y-6">
+                    <!-- Soal 1 -->
+                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200">
+                        <p class="font-bold text-slate-800 mb-3">1. Memecah masalah kompleks menjadi komponen-komponen yang lebih kecil dan sederhana disebut...</p>
+                        <div class="space-y-2">
+                            <label class="flex items-center space-x-3 p-3 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
+                                <input type="radio" name="q1" value="A" class="w-4 h-4 text-blue-600">
+                                <span class="text-sm">A. Abstraksi</span>
+                            </label>
+                            <label class="flex items-center space-x-3 p-3 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
+                                <input type="radio" name="q1" value="B" class="w-4 h-4 text-blue-600">
+                                <span class="text-sm">B. Dekomposisi</span>
+                            </label>
+                            <label class="flex items-center space-x-3 p-3 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
+                                <input type="radio" name="q1" value="C" class="w-4 h-4 text-blue-600">
+                                <span class="text-sm">C. Algoritma</span>
+                            </label>
+                            <label class="flex items-center space-x-3 p-3 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
+                                <input type="radio" name="q1" value="D" class="w-4 h-4 text-blue-600">
+                                <span class="text-sm">D. Pengenalan Pola</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Soal 2 -->
+                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200">
+                        <p class="font-bold text-slate-800 mb-3">2. Saat mencuci baju, kita mengabaikan warna gantungan baju dan fokus pada kebersihan pakaian. Langkah ini menerapkan fondasi...</p>
+                        <div class="space-y-2">
+                            <label class="flex items-center space-x-3 p-3 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
+                                <input type="radio" name="q2" value="A" class="w-4 h-4 text-blue-600">
+                                <span class="text-sm">A. Dekomposisi</span>
+                            </label>
+                            <label class="flex items-center space-x-3 p-3 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
+                                <input type="radio" name="q2" value="B" class="w-4 h-4 text-blue-600">
+                                <span class="text-sm">B. Abstraksi</span>
+                            </label>
+                            <label class="flex items-center space-x-3 p-3 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
+                                <input type="radio" name="q2" value="C" class="w-4 h-4 text-blue-600">
+                                <span class="text-sm">C. Pengenalan Pola</span>
+                            </label>
+                            <label class="flex items-center space-x-3 p-3 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
+                                <input type="radio" name="q2" value="D" class="w-4 h-4 text-blue-600">
+                                <span class="text-sm">D. Pengkodean</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Soal 3 -->
+                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200">
+                        <p class="font-bold text-slate-800 mb-3">3. Urutan langkah-langkah yang logis dan terstruktur untuk menyelesaikan suatu masalah disebut...</p>
+                        <div class="space-y-2">
+                            <label class="flex items-center space-x-3 p-3 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
+                                <input type="radio" name="q3" value="A" class="w-4 h-4 text-blue-600">
+                                <span class="text-sm">A. Algoritma</span>
+                            </label>
+                            <label class="flex items-center space-x-3 p-3 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
+                                <input type="radio" name="q3" value="B" class="w-4 h-4 text-blue-600">
+                                <span class="text-sm">B. Sintaksis</span>
+                            </label>
+                            <label class="flex items-center space-x-3 p-3 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
+                                <input type="radio" name="q3" value="C" class="w-4 h-4 text-blue-600">
+                                <span class="text-sm">C. Evaluasi</span>
+                            </label>
+                            <label class="flex items-center space-x-3 p-3 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
+                                <input type="radio" name="q3" value="D" class="w-4 h-4 text-blue-600">
+                                <span class="text-sm">D. Abstraksi</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Soal 4 -->
+                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200">
+                        <p class="font-bold text-slate-800 mb-3">4. Mengetahui bahwa seragam yang sangat kotor butuh waktu perendaman lebih lama merupakan penerapan dari...</p>
+                        <div class="space-y-2">
+                            <label class="flex items-center space-x-3 p-3 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
+                                <input type="radio" name="q4" value="A" class="w-4 h-4 text-blue-600">
+                                <span class="text-sm">A. Dekomposisi</span>
+                            </label>
+                            <label class="flex items-center space-x-3 p-3 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
+                                <input type="radio" name="q4" value="B" class="w-4 h-4 text-blue-600">
+                                <span class="text-sm">B. Algoritma</span>
+                            </label>
+                            <label class="flex items-center space-x-3 p-3 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
+                                <input type="radio" name="q4" value="C" class="w-4 h-4 text-blue-600">
+                                <span class="text-sm">C. Pengenalan Pola</span>
+                            </label>
+                            <label class="flex items-center space-x-3 p-3 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
+                                <input type="radio" name="q4" value="D" class="w-4 h-4 text-blue-600">
+                                <span class="text-sm">D. Simulasi Digital</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Soal 5 -->
+                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200">
+                        <p class="font-bold text-slate-800 mb-3">5. Mana dari pernyataan berikut yang PALING TEPAT menggambarkan Berpikir Komputasional?</p>
+                        <div class="space-y-2">
+                            <label class="flex items-center space-x-3 p-3 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
+                                <input type="radio" name="q5" value="A" class="w-4 h-4 text-blue-600">
+                                <span class="text-sm">A. Harus selalu menggunakan komputer canggih untuk menyelesaikan masalah.</span>
+                            </label>
+                            <label class="flex items-center space-x-3 p-3 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
+                                <input type="radio" name="q5" value="B" class="w-4 h-4 text-blue-600">
+                                <span class="text-sm">B. Kemampuan merumuskan masalah dan mencari solusi yang efisien, baik menggunakan atau tanpa komputer.</span>
+                            </label>
+                            <label class="flex items-center space-x-3 p-3 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
+                                <input type="radio" name="q5" value="C" class="w-4 h-4 text-blue-600">
+                                <span class="text-sm">C. Menghafal seluruh kode pemrograman bahasa Python atau C++.</span>
+                            </label>
+                            <label class="flex items-center space-x-3 p-3 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
+                                <input type="radio" name="q5" value="D" class="w-4 h-4 text-blue-600">
+                                <span class="text-sm">D. Menggantikan seluruh aktivitas manusia dengan robot otomatis.</span>
+                            </label>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="mt-8 flex justify-between items-center">
+                    <button onclick="switchTab('kasus')" class="px-5 py-2.5 bg-slate-200 hover:bg-slate-300 text-slate-700 font-medium rounded-xl transition flex items-center space-x-2">
+                        <i class="fa-solid fa-arrow-left"></i><span>Kembali</span>
+                    </button>
+                    <button onclick="calculateResult()" class="px-8 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-lg transition flex items-center space-x-2">
+                        <i class="fa-solid fa-paper-plane"></i><span>Kirim & Lihat Sertifikat</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 8: HASIL & SERTIFIKAT KELULUSAN -->
+        <section id="section-hasil" class="tab-content hidden space-y-6">
+            <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200/80">
+                <div class="flex items-center justify-between mb-6 border-b border-slate-200 pb-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="p-3 bg-emerald-100 text-emerald-700 rounded-xl">
+                            <i class="fa-solid fa-certificate text-2xl"></i>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold tracking-wider text-emerald-600 uppercase">Bagian 8</span>
+                            <h2 class="text-2xl font-bold text-slate-800">Sertifikat Hasil Pembelajaran</h2>
+                        </div>
+                    </div>
+                    
+                    <button onclick="downloadCertificate()" class="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-md transition flex items-center space-x-2">
+                        <i class="fa-solid fa-download"></i><span>Download / Cetak Sertifikat</span>
+                    </button>
+                </div>
+
+                <!-- ALERT JIKA BELUM MENGISI -->
+                <div id="alert-not-complete" class="bg-amber-50 border border-amber-200 text-amber-800 p-6 rounded-2xl text-center space-y-3">
+                    <i class="fa-solid fa-triangle-exclamation text-4xl text-amber-500"></i>
+                    <h3 class="font-bold text-lg">Asesmen Belum Selesai</h3>
+                    <p class="text-sm">Silakan isi Data Diri dan selesaikan **Asesmen Akhir Pembelajaran** di Bagian 7 terlebih dahulu untuk penerbitan sertifikat resmi.</p>
+                    <button onclick="switchTab('asesmen')" class="mt-2 inline-flex items-center space-x-2 px-5 py-2 bg-amber-600 text-white font-semibold rounded-xl text-sm">
+                        <span>Ke Bagian Asesmen</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+
+                <!-- DESAIN SERTIFIKAT RESMI (PRINTABLE) -->
+                <div id="certificate-wrapper" class="hidden">
+                    <div id="printable-certificate" class="bg-gradient-to-b from-slate-50 via-white to-blue-50/30 p-8 sm:p-12 rounded-3xl border-8 border-double border-indigo-900 shadow-2xl relative overflow-hidden">
+                        
+                        <!-- Decorative Corners -->
+                        <div class="absolute top-3 left-3 w-12 h-12 border-t-4 border-l-4 border-indigo-900"></div>
+                        <div class="absolute top-3 right-3 w-12 h-12 border-t-4 border-r-4 border-indigo-900"></div>
+                        <div class="absolute bottom-3 left-3 w-12 h-12 border-b-4 border-l-4 border-indigo-900"></div>
+                        <div class="absolute bottom-3 right-3 w-12 h-12 border-b-4 border-r-4 border-indigo-900"></div>
+
+                        <!-- Header Sertifikat -->
+                        <div class="text-center space-y-2 mb-8">
+                            <div class="inline-flex items-center justify-center p-3 bg-indigo-900 text-yellow-400 rounded-2xl mb-2">
+                                <i class="fa-solid fa-graduation-cap text-3xl"></i>
+                            </div>
+                            <h3 class="font-serif-title text-3xl sm:text-4xl font-extrabold text-indigo-950 tracking-wide uppercase">SERTIFIKAT KELULUSAN</h3>
+                            <p class="text-xs sm:text-sm font-semibold tracking-widest text-slate-500 uppercase">MODUL BERPIKIR KOMPUTASIONAL (COMPUTATIONAL THINKING)</p>
+                            <div class="w-32 h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 mx-auto rounded-full mt-2"></div>
+                        </div>
+
+                        <!-- Content Sertifikat -->
+                        <div class="text-center space-y-4 mb-8">
+                            <p class="text-slate-600 text-sm">Sertifikat ini secara resmi diberikan kepada:</p>
+                            <h4 id="cert-nama" class="text-2xl sm:text-3xl font-extrabold text-indigo-900 underline decoration-indigo-300 underline-offset-8">NAMA SISWA</h4>
+                            <p class="text-slate-700 text-sm">Kelas / Rombel: <span id="cert-kelas" class="font-bold">X KKA 1</span></p>
+                            
+                            <p class="text-slate-600 text-sm max-w-2xl mx-auto pt-2 leading-relaxed">
+                                Telah secara aktif menyelesaikan seluruh rangkaian Media Pembelajaran Interaktif serta berhasil menempuh Asesmen Akhir Berpikir Komputasional dengan pencapaian sebagai berikut:
+                            </p>
+
+                            <!-- Score Box -->
+                            <div class="inline-block bg-gradient-to-r from-indigo-900 to-purple-900 text-white px-8 py-3 rounded-2xl shadow-md my-4">
+                                <span class="text-xs uppercase font-bold text-indigo-200 block">NILAI AKHIR ASESMEN</span>
+                                <span id="cert-nilai" class="text-4xl font-extrabold text-yellow-300">100</span>
+                                <span class="text-xs text-indigo-200 block mt-0.5" id="cert-predikat">Predikat: Sangat Memuaskan</span>
+                            </div>
+                        </div>
+
+                        <!-- Footer Sertifikat (Tanggal & Tanda Tangan Guru) -->
+                        <div class="grid grid-cols-2 gap-4 pt-6 border-t border-slate-200 text-xs sm:text-sm">
+                            <div class="text-left flex flex-col justify-end">
+                                <p class="text-slate-500">Tanggal Pelaksanaan:</p>
+                                <p id="cert-tanggal" class="font-bold text-slate-800">10 November 2026</p>
+                                <p class="text-slate-400 text-xs mt-1">Status: Terverifikasi Sistem</p>
+                            </div>
+                            <div class="text-right space-y-1">
+                                <p class="text-slate-500">Guru Pengampu KKA,</p>
+                                <!-- Tanda tangan digital stempel visual -->
+                                <div class="py-2 flex justify-end">
+                                    <div class="border-2 border-dashed border-indigo-300 bg-indigo-50/50 px-4 py-1.5 rounded-lg text-indigo-800 text-xs font-serif italic">
+                                        Tri Wiyanti, S.Kom
+                                    </div>
+                                </div>
+                                <p class="font-bold text-slate-900 text-sm">Tri Wiyanti, S.Kom</p>
+                                <p class="text-slate-600 text-xs font-mono">NIP. 19830714 202421 2 012</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 text-xs py-6 border-t border-slate-800 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
+            <p>© 2026 Media Pembelajaran Interaktif KKA - Berpikir Komputasional.</p>
+            <p class="text-slate-500">Dikembangkan untuk mendukung efektivitas dan kemudahan belajar siswa.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Interaktif -->
+    <script>
+        // Data Kunci Jawaban
+        const pemantikAnswers = {
+            1: 'B',
+            2: 'C'
+        };
+
+        const quizAnswers = {
+            q1: 'B',
+            q2: 'B',
+            q3: 'A',
+            q4: 'C',
+            q5: 'B'
+        };
+
+        // Tab Navigation Logic
+        function switchTab(tabId) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.add('hidden');
+                tab.classList.remove('block');
+            });
+            // Show select tab
+            const target = document.getElementById(`section-${tabId}`);
+            if (target) {
+                target.classList.remove('hidden');
+                target.classList.add('block');
+            }
+
+            // Update Nav styles
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('bg-white/20', 'text-white');
+                btn.classList.add('text-blue-100');
+            });
+            const activeBtn = document.getElementById(`nav-${tabId}`);
+            if (activeBtn) {
+                activeBtn.classList.add('bg-white/20', 'text-white');
+                activeBtn.classList.remove('text-blue-100');
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Pembahasan Soal Pemantik
+        function checkPemantik(qNum, selected, isCorrect) {
+            const feedbackDiv = document.getElementById(`feedback-p${qNum}`);
+            feedbackDiv.classList.remove('hidden');
+
+            if (isCorrect) {
+                feedbackDiv.className = "mt-4 p-4 rounded-xl text-sm leading-relaxed bg-emerald-100 text-emerald-900 border border-emerald-300";
+                feedbackDiv.innerHTML = `<strong><i class="fa-solid fa-circle-check"></i> Jawaban Tepat!</strong><br>
+                ${qNum === 1 ? 'Memecah masalah besar menjadi bagian kecil adalah konsep utama Dekomposisi.' : 'Berpikir Komputasional adalah metode memecahkan masalah secara efisien dan sistematis.'}`;
+            } else {
+                feedbackDiv.className = "mt-4 p-4 rounded-xl text-sm leading-relaxed bg-rose-100 text-rose-900 border border-rose-300";
+                feedbackDiv.innerHTML = `<strong><i class="fa-solid fa-circle-xmark"></i> Kurang Tepat.</strong> Coba pertimbangkan pilihan lain yang merujuk pada prinsip pemecahan masalah yang sistematis!`;
+            }
+        }
+
+        // Tab Studi Kasus
+        function showKasusTab(pil) {
+            document.querySelectorAll('.kasus-content').forEach(c => c.classList.add('hidden'));
+            document.querySelectorAll('.kasus-tab-btn').forEach(b => {
+                b.classList.remove('bg-teal-600', 'text-white');
+                b.classList.add('bg-slate-800', 'text-slate-300');
+            });
+
+            document.getElementById(`kasus-${pil}`).classList.remove('hidden');
+            const activeTabBtn = document.getElementById(`ktab-${pil}`);
+            activeTabBtn.classList.add('bg-teal-600', 'text-white');
+            activeTabBtn.classList.remove('bg-slate-800', 'text-slate-300');
+        }
+
+        // Kalkulasi Skor Asesmen & Tampilkan Sertifikat
+        function calculateResult() {
+            const nama = document.getElementById('input-nama').value.trim();
+            const kelas = document.getElementById('input-kelas').value.trim();
+
+            if (!nama || !kelas) {
+                alert('Mohon isi Nama Lengkap dan Kelas Anda terlebih dahulu!');
+                document.getElementById('input-nama').focus();
+                return;
+            }
+
+            let score = 0;
+            const totalQuestions = 5;
+
+            for (let i = 1; i <= totalQuestions; i++) {
+                const selected = document.querySelector(`input[name="q${i}"]:checked`);
+                if (selected && selected.value === quizAnswers[`q${i}`]) {
+                    score += 20; // 5 soal * 20 = 100
+                }
+            }
+
+            // Set Data Sertifikat
+            document.getElementById('cert-nama').innerText = nama.toUpperCase();
+            document.getElementById('cert-kelas').innerText = kelas;
+            document.getElementById('cert-nilai').innerText = score;
+
+            // Set Predikat
+            let predikat = "Memuaskan";
+            if (score >= 90) predikat = "Predikat: Sangat Memuaskan (Sangat Baik)";
+            else if (score >= 70) predikat = "Predikat: Baik";
+            else predikat = "Predikat: Cukup (Perlu Belajar Lagi)";
+            document.getElementById('cert-predikat').innerText = predikat;
+
+            // Set Tanggal Realtime (Format Indonesia)
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            const today = new Date().toLocaleDateString('id-ID', options);
+            document.getElementById('cert-tanggal').innerText = today;
+
+            // Switch UI ke Sertifikat
+            document.getElementById('alert-not-complete').classList.add('hidden');
+            document.getElementById('certificate-wrapper').classList.remove('hidden');
+
+            switchTab('hasil');
+        }
+
+        // Download / Cetak Sertifikat
+        function downloadCertificate() {
+            window.print();
+        }
+    </script>
+</body>
+</html>
